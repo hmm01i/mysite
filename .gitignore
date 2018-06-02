@@ -1,5 +1,7 @@
 *.swp
 data/
+bin/
+include/
 config.py
 
 # Byte-compiled / optimized / DLL files
