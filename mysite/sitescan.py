@@ -14,7 +14,7 @@ def update_clients(host_list):
     conn = database.connect_db()
     with conn:
         cr = conn.cursor()
-        cr.execute('DROP TABLE clients')
+        cr.execute('DROP TABLE IF EXISTS clients')
         conn.commit()
         cr.execute('CREATE TABLE clients (ip text, hostname text)')
         for h in host_list:
