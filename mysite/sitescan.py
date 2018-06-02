@@ -1,16 +1,25 @@
 import nmap
 import sqlite3
+import config
+import database
 
 def scan_hosts(targets):
     nm = nmap.PortScanner()
-    nm.scan(hosts=targets)
-    host_list = [(x, nm[x]['hostnames'][0]['name'], str(list(nm[x]['tcp'].keys()))) for x in nm.all_hosts()]
-    print(host_list)
-    conn = sqlite3.connect('site.sqlite')
-    conn.executemany('INSERT INTO clients values (?,?,?)',host_list)
-    conn.commit()
-    conn.close()
+    nm.scan(hosts=targets,arguments='-sP')
+    host_list = [(x, nm[x]['hostnames'][0]['name']) for x in nm.all_hosts()]
+    return host_list
 
+
+def update_clients(host_list):
+    conn = database.connect_db()
+    with conn:
+        cr = conn.cursor()
+        cr.execute('DROP TABLE clients')
+        conn.commit()
+        cr.execute('CREATE TABLE clients (ip text, hostname text)')
+        for h in host_list:
+            conn.execute("INSERT INTO clients VALUES(?,?)",(h))
 
 if __name__ == "__main__":
-    scan_hosts('127.0.0.1')
+    hosts = scan_hosts('192.168.1.0/24')
+    update_clients(hosts)
