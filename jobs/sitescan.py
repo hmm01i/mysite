@@ -2,6 +2,7 @@ import nmap
 import sqlite3
 import config
 import database
+import mysite
 
 class SiteScan:
     def __init__(self,site_range='127.0.0.1'):

@@ -1,5 +1,5 @@
 import sqlite3
-import config
+from mysite import config
 
 db = config.database
 def init_db():
