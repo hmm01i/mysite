@@ -1,6 +1,6 @@
 import nmap
 import sqlite3
-import database
+import mysite.database
 import mysite
 import sys
 

@@ -1,5 +1,5 @@
 import nmap
-import database
+import mysite.database
 import mysite
 import sys
 
@@ -16,7 +16,7 @@ class SiteScan:
         return host_list
 
     def update_db(self,host_list):
-        conn = database.connect_db()
+        conn = mysite.database.connect_db()
         with conn:
             cr = conn.cursor()
             cr.execute('DROP TABLE IF EXISTS clients')
