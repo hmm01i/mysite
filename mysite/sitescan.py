@@ -1,17 +1,17 @@
 import nmap
-import sqlite3
 import database
 import mysite
 import sys
 
 class SiteScan:
     def __init__(self,site_range='127.0.0.1'):
-        self.site_range = site_range
+        self.range = site_range
 
     def scan(self):
-        t = self.site_range
+        pt = self.range
+        print(pt)
         nm = nmap.PortScanner()
-        nm.scan(hosts=t,arguments='-sP')
+        nm.scan(hosts=pt,arguments='-sP')
         host_list = [(x, nm[x]['hostnames'][0]['name']) for x in nm.all_hosts()]
         return host_list
 
@@ -29,8 +29,8 @@ class SiteScan:
         self.update_db(self.scan())
 
 if __name__ == "__main__":
-    if sys.argv[0]:
-        ss = SiteScan(sys.argv[0])
+    if len(sys.argv) > 1:
+        ss = SiteScan(sys.argv[1])
     else:
-        ss = SiteScan('127.0.0.1')
+        ss = SiteScan()
     print(ss.scan())
