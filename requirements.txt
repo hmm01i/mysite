@@ -1,7 +1,10 @@
 click==6.7
 Flask==1.0.2
+Flask-SQLAlchemy==2.3.2
 itsdangerous==0.24
 Jinja2==2.10
 MarkupSafe==1.0
+-e git+git@github.com:hmm01i/mysite.git@a994b3238aa1947d53714219044eb9d07c6c7c79#egg=mysite
 python-nmap==0.6.1
+SQLAlchemy==1.2.8
 Werkzeug==0.14.1
