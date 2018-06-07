@@ -1,1 +1,8 @@
+ENV = 'development'
+DEBUG = True
+
 database = 'data/site.db'
+site_scan_range = '127.0.0.1/32' # just scan local host
+
+SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
