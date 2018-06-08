@@ -2,12 +2,15 @@
 {% block content %}
 <div>
   <div>
-  <label for="title">Title</label>
-  <input id=title placeholder="Post Title"></input>
-  </div>
-  <div>
-  <label for="content">Content</label>
-  <textarea class="form-control" id="content"></textarea>
+    <form action="/create" method="post">
+      <label for="title">Title</label>
+      <input id=title name="title" placeholder="Post Title"></input>
+      </div>
+      <div>
+      <label for="content">Content</label>
+      <textarea class="form-control" id="content" name="content"></textarea>
+      <input id="submit" type="submit" value="Post">
+    </form>
 </div>
 </div>
 {% endblock %}

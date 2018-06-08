@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+  <div>
+    <h2>{{request.form['title']}}</h2>
+  </div>
+  <div>
+    <p>{{request.form['content']}}</p>
+  </div>
+</div>
+{% endblock %}
