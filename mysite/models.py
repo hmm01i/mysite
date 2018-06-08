@@ -8,3 +8,11 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+
+class Book(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(160), unique=True, nullable=False)
+    author = db.Column(db.String(120), unique=True, nullable=False)
+    series = db.Column(db.String(160), unique=True, nullable=False)
+    genre = db.Column(db.String(80), unique=True, nullable=False)
