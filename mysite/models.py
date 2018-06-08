@@ -21,5 +21,5 @@ class Book(db.Model):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(160), unique=True, nullable=False)
-    content = db.Column(db.String(1000), unique=True, nullable=False)
+    content = db.Column(db.Text, unique=True, nullable=False)
 
