@@ -8,6 +8,10 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/activity')
+def activity():
+    return render_template('activity.html')
+
 @app.route('/blog')
 def blog():
     # if user is logged in should also be able to create posts
