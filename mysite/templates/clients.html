@@ -1,17 +1,23 @@
 {% extends 'layout.html' %}
 {% block content%}
-<div class="table-sorter">
-	<table>
+<link href="{{url_for('static', filename='themes/blue/style.css') }}" rel="stylesheet">
+<div class="container">
+	<table id="networkClients" class="tablesorter" >
+		<thead>
 		<tr>
 			<th>ip</th>
 			<th>hostname</th>
 		</tr>
+		</thead>
+		<tbody>
 		{% for c in clients %}
 		<tr>
 			<td>{{c.ip}}</td>
 			<td>{{c.hostname}}</td>
 		</tr>
 		{% endfor %}
+		</tbody>
 	</table>
 </div>
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery.tablesorter.min.js')}}"></script>
 {% endblock %}
