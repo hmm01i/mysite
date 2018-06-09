@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if msg != "" %}
+<p>{{msg}}</p>
+{% endif %}
+<div class="form-group">
+  <form method="post">
+    <input name=init_db hidden=true>
+    <input id=submit_init_db name=submit type=submit value=init_db>
+  </form>
+</div>
+{% endblock %}
