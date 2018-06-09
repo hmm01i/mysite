@@ -1,8 +1,20 @@
+'''
+Database models. using sqlalchemy
+
+Currently supporting the following models
+Host - computers / servers on my network
+User - Users of site
+Book - books users have or are reading
+'''
+
 
 from mysite import db
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    '''
+    User for tracking activity and use of site
+    '''
+    user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), nullable=False)
 
@@ -11,7 +23,10 @@ class User(db.Model):
 
 
 class Book(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    '''
+    To track reading activity. Should be populated by goodreads data
+    '''
+    book_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(160), nullable=False)
     author = db.Column(db.String(120), nullable=False)
     series = db.Column(db.String(160))
@@ -19,7 +34,18 @@ class Book(db.Model):
 
 
 class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    '''
+    "blog" or note style data entered into site.
+    '''
+    post_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(160), nullable=False)
     content = db.Column(db.Text, nullable=False)
 
+
+class Host(db.Model):
+    '''
+    Simple tracking of host for inventory etc
+    '''
+    host_id = db.Column(db.Integer, primary_key=True)
+    ip = db.Column(db.String(20))
+    hostname = db.Column(db.String(120), nullable=False)

@@ -1,4 +1,17 @@
 {% extends 'layout.html' %}
 {% block content%}
-
+<div class="table-sorter">
+	<table>
+		<tr>
+			<th>ip</th>
+			<th>hostname</th>
+		</tr>
+		{% for c in clients %}
+		<tr>
+			<td>{{c.ip}}</td>
+			<td>{{c.hostname}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
 {% endblock %}
