@@ -3,7 +3,7 @@ View functions for app
 '''
 from flask import render_template, request, g
 from mysite import app, db
-from mysite.models import Host, Post
+from mysite.models import Host, Post, Subnet
 
 @app.route('/')
 def index():
@@ -39,7 +39,7 @@ def clients():
     '''
     display clients on the network
     '''
-    hosts = Host.query.all()
+    hosts = Subnet.query.all()
     return render_template('clients.html', clients=hosts)
 
 @app.route('/blog')
@@ -57,8 +57,8 @@ def create():
     '''
     if request.method == 'POST':
         if request.form.get('title') and request.form.get('content'):
-            p = Post(title=request.form.get('title'), content=request.form.get('content'))
-            db.session.add(p)
+            post = Post(title=request.form.get('title'), content=request.form.get('content'))
+            db.session.add(post)
             db.session.commit()
             return render_template('entry.html')
         return render_template('error.html', error="failure posting")

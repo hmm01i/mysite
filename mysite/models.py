@@ -49,3 +49,11 @@ class Host(db.Model):
     host_id = db.Column(db.Integer, primary_key=True)
     ip = db.Column(db.String(20))
     hostname = db.Column(db.String(120), nullable=False)
+
+class Subnet(db.Model):
+    '''
+    Simple tracking of subnet ips
+    '''
+    ip = db.Column(db.String(20), primary_key=True)
+    hostname = db.Column(db.String(120), nullable=True)
+    last_updated = db.Column(db.DateTime, nullable=False)
