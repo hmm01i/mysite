@@ -2,23 +2,21 @@
 Job to scan network and store list of members in database
 '''
 import sys
-import time
 import datetime
 import nmap
+from sqlalchemy import create_engine
 from mysite import db
 import mysite
 from mysite.models import Host, Subnet
-from sqlalchemy import create_engine
 
 def scan(scanrange):
     '''
     do a simple scan and return results
     '''
-    pt = scanrange
-    print(pt)
-    nm = nmap.PortScanner()
-    nm.scan(hosts=pt,arguments='-sP')
-    host_list = [(x, nm[x]['hostnames'][0]['name']) for x in nm.all_hosts()]
+    print(scanrange)
+    scanner = nmap.PortScanner()
+    scanner.scan(hosts=scanrange, arguments='-sP')
+    host_list = [(x, scanner[x]['hostnames'][0]['name']) for x in scanner.all_hosts()]
     return host_list
 
 
@@ -28,22 +26,25 @@ def update_db(host_list):
     '''
     conn = mysite.database.connect_db()
     with conn:
-        cr = conn.cursor()
-        cr.execute('DROP TABLE IF EXISTS clients')
+        cur = conn.cursor()
+        cur.execute('DROP TABLE IF EXISTS clients')
         conn.commit()
-        cr.execute('CREATE TABLE clients (ip text, hostname text)')
-        for h in host_list:
-            conn.execute("INSERT INTO clients VALUES(?,?)", (h))
+        cur.execute('CREATE TABLE clients (ip text, hostname text)')
+        for host in host_list:
+            conn.execute("INSERT INTO clients VALUES(?,?)", (host))
 
 
 def update_hosts(host_list):
     '''
     update db using sqlalchemy
     '''
-    for h in host_list:
-        print(h[0], h[1])
-        hostentry = Subnet.query(ip=h[0]).first()
-        db.session.add(Subnet(ip=h[0], hostname=h[1], last_updated=datetime.datetime.now()))
+    for host in host_list:
+        print(host[0], host[1])
+        hostentry = Subnet.query.first(ip=host[0]).first()
+        if hostentry != None:
+            hostnetry(hostname=host[1], last_updated=datetime.datetime.now())
+        else:
+            db.session.add(Subnet(ip=host[0], hostname=host[1], last_updated=datetime.datetime.now()))
     db.session.commit()
 
 
