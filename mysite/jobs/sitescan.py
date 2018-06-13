@@ -40,11 +40,15 @@ def update_hosts(host_list):
     '''
     for host in host_list:
         print(host[0], host[1])
-        hostentry = Subnet.query.first(ip=host[0]).first()
+        hostentry = Subnet.query.filter_by(ip=host[0]).first()
         if hostentry != None:
-            hostnetry(hostname=host[1], last_updated=datetime.datetime.now())
+            hostentry.hostname = host[1]
+            hostentry.last_updated = datetime.datetime.now()
+            db.session.flush()
         else:
-            db.session.add(Subnet(ip=host[0], hostname=host[1], last_updated=datetime.datetime.now()))
+            db.session.add(Subnet(ip=host[0],
+                                  hostname=host[1],
+                                  last_updated=datetime.datetime.now()))
     db.session.commit()
 
 

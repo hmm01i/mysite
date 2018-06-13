@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="container">
 {% if msg != "" %}
 <p>{{msg}}</p>
 {% endif %}
@@ -8,5 +9,6 @@
     <input name=init_db hidden=true>
     <input id=submit_init_db name=submit type=submit value=init_db>
   </form>
+</div>
 </div>
 {% endblock %}
