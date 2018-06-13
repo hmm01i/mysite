@@ -1,18 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="container">
+	<a href="{{ url_for('create') }}">Create post</a>
 <div class=container>
-
+{% for post in posts %}
   <div class=card>
     <div class=card-body>
-      <h2>Site is coming along</h2>
-      <p>progress to site...
+	    <h2><a href="{{url_for('entry', post_id=post.post_id) }}">{{ post.title }}</a></h2>
+	    <p>{{ post.create_date }}
+	    <p>{{ post.content }}
     </div>
   </div>
-  <div class=card>
-    <div class=card-body>
-      <h2>Blog post</h2>
-      <p>Blog snippet...</p>
-    </div>
-  </div>
-</div>
+  <br>
+{% endfor %}
 {% endblock %}
