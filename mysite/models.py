@@ -58,3 +58,22 @@ class Subnet(db.Model):
     ip = db.Column(db.String(20), primary_key=True)
     hostname = db.Column(db.String(120), nullable=True)
     last_updated = db.Column(db.DateTime, nullable=False)
+
+class GitHubEvent(db.Model):
+    '''
+    to cache and track github events
+    '''
+    event_id = db.Column(db.Integer, primary_key=True)
+    repo_id = db.Column(db.Integer, nullable=True)
+#    event_timestamp = db.Column(db.DateTime, nullable=False)
+    event_timestamp = db.Column(db.String(30), nullable=False)
+    event_type = db.Column(db.String(20), nullable=False)
+
+class Repo(db.Model):
+    '''
+    track source code repos. could be git or other?
+    '''
+    repo_id = db.Column(db.Integer, primary_key=True)
+    repo_name = db.Column(db.String(32), nullable=False)
+    repo_type = db.Column(db.String(20), nullable=False)
+    repo_url = db.Column(db.String(120), nullable=True)
