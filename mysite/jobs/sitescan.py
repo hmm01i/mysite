@@ -52,7 +52,7 @@ def update_hosts(host_list):
     db.session.commit()
 
 
-def sitescan_job(scanrange='127.0.0.1'):
+def run_job(scanrange='127.0.0.1'):
     '''
     The job that strings funcs together
     '''
@@ -60,6 +60,6 @@ def sitescan_job(scanrange='127.0.0.1'):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        print(sitescan_job(sys.argv[1]))
+        print(sitescan(sys.argv[1]))
     else:
-        print(sitescan_job('192.168.1.0/24'))
+        print(sitescan('192.168.1.0/24'))
