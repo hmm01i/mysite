@@ -16,5 +16,5 @@ RUN pip3 install .
 
 EXPOSE 5000
 
-CMD ["python3", "run.py"]
+CMD ["python3", "run_site.py"]
 
