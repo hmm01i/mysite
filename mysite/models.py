@@ -58,3 +58,11 @@ class Subnet(db.Model):
     ip = db.Column(db.String(20), primary_key=True)
     hostname = db.Column(db.String(120), nullable=True)
     last_updated = db.Column(db.DateTime, nullable=False)
+
+class Job(db.Model):
+    '''
+    for job processor
+    '''
+    job_id =  db.Column(db.Integer, primary_key=True)
+    function = db.Column(db.String(160), nullable=False)
+    status = db.Column(db.Integer, nullable=False, default=-1)

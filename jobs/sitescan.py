@@ -1,36 +1,46 @@
-import nmap
-import sqlite3
-import mysite.database
-import mysite
 import sys
+import datetime
+import nmap
+from mysite.models import Subnet
+from mysite import db
 
-class SiteScan:
-    def __init__(self,site_range='127.0.0.1'):
-        self.site_range = site_range
+def scan(scanrange):
+    '''
+    do a simple scan and return results
+    '''
+    scanner = nmap.PortScanner()
+    scanner.scan(hosts=scanrange, arguments='-sP')
+    host_list = [(x, scanner[x]['hostnames'][0]['name']) for x in scanner.all_hosts()]
+    return host_list
 
-    def scan(self):
-        t = self.site_range
-        nm = nmap.PortScanner()
-        nm.scan(hosts=t,arguments='-sP')
-        host_list = [(x, nm[x]['hostnames'][0]['name']) for x in nm.all_hosts()]
-        return host_list
 
-    def update_db(self,host_list):
-        conn = database.connect_db()
-        with conn:
-            cr = conn.cursor()
-            cr.execute('DROP TABLE IF EXISTS clients')
-            conn.commit()
-            cr.execute('CREATE TABLE clients (ip text, hostname text)')
-            for h in host_list:
-                conn.execute("INSERT INTO clients VALUES(?,?)",(h))
+def update_hosts(host_list):
+    '''
+    update db using sqlalchemy
+    '''
+    for host in host_list:
+        # TODO: add logging
+#        print(host[0], host[1])
+        hostentry = Subnet.query.filter_by(ip=host[0]).first()
+        if hostentry != None:
+            hostentry.hostname = host[1]
+            hostentry.last_updated = datetime.datetime.now()
+            db.session.flush()
+        else:
+            db.session.add(Subnet(ip=host[0],
+                                  hostname=host[1],
+                                  last_updated=datetime.datetime.now()))
+    db.session.commit()
 
-    def job(self):
-        self.update_db(self.scan())
+
+def run(scanrange='127.0.0.1'):
+    '''
+    The job that strings funcs together
+    '''
+    update_hosts(scan(scanrange))
 
 if __name__ == "__main__":
-    if sys.argv[0]:
-        ss = SiteScan(sys.argv[0])
+    if len(sys.argv) > 1:
+        print(scan(sys.argv[1]))
     else:
-        ss = SiteScan('127.0.0.1')
-    print(ss.scan())
+        print(scan('192.168.1.0/24'))

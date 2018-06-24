@@ -1,7 +1,11 @@
 import sqlite3
-from mysite import config
+from mysite import db
 
-db = config.database
+def create_tables():
+    # Create table for each model if it does not exist.
+    # Use the underlying peewee database object instead of the
+    # flask-peewee database wrapper:
+    db.create_all()
 
 def tables(table=None):
     tables = { 'hosts': [
