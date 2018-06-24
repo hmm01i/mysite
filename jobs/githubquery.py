@@ -16,7 +16,7 @@ def get_events(user='hmm01i'):
     with req.urlopen('https://api.github.com/users/{}/events'.format(user)) as resp:
         raw_events = resp.read().decode()
 
-    print(json.loads(raw_events))
+    return raw_events
 
 def parse_events(raw_events):
     '''
