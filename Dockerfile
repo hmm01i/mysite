@@ -1,6 +1,7 @@
 FROM alpine
 
 RUN apk --no-cache add \
+  nmap \
   python3
 
 WORKDIR /app

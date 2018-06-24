@@ -1,5 +1,5 @@
 import sqlite3
-from mysite import config, db
+from mysite import db
 
 def create_tables():
     # Create table for each model if it does not exist.

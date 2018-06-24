@@ -2,7 +2,6 @@ import sys
 import datetime
 import nmap
 from mysite.models import Subnet
-#import mysite.database
 from mysite import db
 
 def scan(scanrange):

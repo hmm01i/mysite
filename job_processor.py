@@ -7,16 +7,15 @@ def run_job():
     pass
     #query database for jobs to run
     job = Job.query.filter_by(status=-1).first()
-    #if job found:
-        #mysite.job.<job_name>.run()
     if job:
         print(job.function)
-        # see if its a valid job
-
         run = exec(job.function+".run()")
         if run:
             print(run)
             run()
+            job.status = 0
+            db.commit()
+
     #clear job from database
     #send logs/status
 
