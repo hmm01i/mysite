@@ -27,6 +27,9 @@ def admin():
             db.drop_all()
             db.create_all()
             msg = "DB initialized..."
+        elif request.form.get('submit') == 'sitescan':
+            from jobs import sitescan
+            msg = sitescan.run()
     return render_template('admin.html', msg=msg)
 
 @app.route('/activity')
